@@ -1,0 +1,17 @@
+<!DOCTYPE html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tes Firebase</title><body style="font:15px system-ui;padding:16px;background:#140c07;color:#efe0c2">
+<h3>Tes koneksi Firebase</h3><pre id="o">Menjalankan…</pre>
+<script type="module">
+const o=document.getElementById("o"),log=t=>o.textContent+="\n"+t;
+try{
+ const S="https://www.gstatic.com/firebasejs/10.12.2/";
+ const {initializeApp}=await import(S+"firebase-app.js");
+ const d=await import(S+"firebase-database.js");
+ log("✔ SDK Firebase termuat");
+ const db=d.getDatabase(initializeApp({apiKey:"AIzaSyCebKHJs-e-oUKDp4UbCN64o6rBL8SC7bI",projectId:"berburu-animals",appId:"1:824631771581:web:4b5e2302ae57e763ce92d4"}),"https://berburu-animals-default-rtdb.asia-southeast1.firebasedatabase.app");
+ const r=d.ref(db,"rn/tes/"+Math.random().toString(36).slice(2,8));
+ await d.set(r,{t:d.serverTimestamp(),ok:1}); log("✔ TULIS berhasil");
+ const s=await d.get(r); log(s.val()&&s.val().ok?"✔ BACA berhasil":"✘ BACA kosong");
+ await d.remove(r); log("✔ HAPUS berhasil\n\nSEMUA OK: Rules & koneksi benar. Silakan buka index.html.");
+}catch(e){log("✘ GAGAL: "+(e.code||e.message)+(/permission/i.test(e.message)?"\n→ Publish database.rules.json di Firebase Console → Realtime Database → Rules.":"\n→ Pastikan memakai HTTPS/localhost dan ada internet."));}
+</script>
